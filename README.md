@@ -1,0 +1,4 @@
+SHiNiNG
+=======
+
+A Game Framework
