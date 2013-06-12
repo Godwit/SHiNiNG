@@ -35,11 +35,10 @@
 %% @end
 %%-------------------------------------------------------------------- 
 start(_StartType, _StartArgs) ->
-	%%% Initialize log4erl
-	application:start( log4erl ),
-	log4erl:conf( "../priv/log4erl.conf" ),
+	init_logger(),	
 	log4erl:info("~n~p:~p (~p) start(~p, ~p) ~n",
 		[?MODULE, ?LINE, self(), _StartType, _StartArgs]),
+	init_db(),
 	case sn_server_sup:start_link() of 
 	  {ok, Pid} ->
 	     {ok, Pid}; 
@@ -64,3 +63,14 @@ stop(_State) ->
 %%%=================================================================== 
 %%% Internal functions 
 %%%===================================================================
+init_logger() ->
+	%%% Initialize log4erl
+	application:start( log4erl ),
+	log4erl:conf( "../priv/log4erl.conf" ),
+	log4erl:info( "Log4erl initialize sucessfully!" ),
+	ok.
+
+init_db() ->
+	schema:install_db( [node()] ),
+	log4erl:info( "Database initialize sucessfully!" ),
+	ok.
