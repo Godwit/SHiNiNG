@@ -52,11 +52,11 @@ start_link() ->
 %%--------------------------------------------------------------------
 
 init([]) ->
-	io:format("~n~p:~p(~p) init(~p)~n",
+	log4erl:info("~n~p:~p(~p) init(~p)~n",
 		[?MODULE, ?LINE, self(), []]), 
 	{ok, []};
 init(Status) ->
-	io:format("~n~p:~p(~p) init(~p)~n",
+	log4erl:info("~n~p:~p(~p) init(~p)~n",
 		[?MODULE, ?LINE, self(), Status]), 
 	{ok, Status}.
 

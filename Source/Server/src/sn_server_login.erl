@@ -38,12 +38,12 @@ start_link() ->
 %%% gen_server callbacks 
 %%%===================================================================
 init([]) ->
-	io:format("~n~p:~p(~p) init(~p)~n",
+	log4erl:info("~n~p:~p(~p) init(~p)~n",
 		[?MODULE, ?LINE, self(), []]),
 	{ ok, [] }.
 
 handle_call({ register_account, UserName, Password, NickName, Gender}, _From, State) -> 
-	io:format( "~n~p:~p:~p:~p~n",
+	log4erl:info( "~n~p:~p:~p:~p~n",
 		[ UserName, Password, NickName, Gender ]),
 	%%% do some register thing.
 	Reply = "HelloTesting",

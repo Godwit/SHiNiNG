@@ -10,6 +10,7 @@
 
 -behaviour( application ).
 
+%-include( "def.hrl" ).
 %%% Application callbacks
 -export( [start/2, stop/1] ).
 
@@ -34,13 +35,16 @@
 %% @end
 %%-------------------------------------------------------------------- 
 start(_StartType, _StartArgs) ->
-	io:format("~n~p:~p (~p) start(~p, ~p) ~n",
+	%%% Initialize log4erl
+	application:start( log4erl ),
+	log4erl:conf( "../priv/log4erl.conf" ),
+	log4erl:info("~n~p:~p (~p) start(~p, ~p) ~n",
 		[?MODULE, ?LINE, self(), _StartType, _StartArgs]),
 	case sn_server_sup:start_link() of 
 	  {ok, Pid} ->
 	     {ok, Pid}; 
 	  Error ->
-	     io:format( "~nSome disaster happened here~n" ),
+	     log4erl:error( "~nSome disaster happened here~n" ),
 	     Error 
 		end.
 

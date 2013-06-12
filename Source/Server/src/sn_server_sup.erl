@@ -43,7 +43,7 @@ start_link() ->
 %% @end 
 %%--------------------------------------------------------------------
 init([]) ->
-       io:format("~n~p:~p (~p) init([]) ~n",
+       log4erl:info("~n~p:~p (~p) init([]) ~n",
 		[?MODULE, ?LINE, self()]),	
 	RestartStrategy		  = one_for_one,
 	MaxRestarts    		  = 1000,
