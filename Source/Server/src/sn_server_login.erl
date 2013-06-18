@@ -14,11 +14,20 @@
 %% gen_server callbacks
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2,
 	terminate/2, code_change/3]). 
--export([register_account/4]). 
+-export([register_account/4, make_json/0]). 
 -define(SERVER, ?MODULE).
+
+-include( "tools.hrl" ).
 
 register_account( UserName, Password, NickName, Gender ) ->
 	gen_server:call( ?MODULE, { register_account, UserName, Password, NickName, Gender } ).
+
+make_json() ->
+	Data = [ { "Godwit", "Love" } ],
+	Json = rfc4627:encode( convert_to_json( Data ) ),
+	io:format( "~n~p~n ", [ Json ] ),
+	Json.
+
 
 %%%=================================================================== 
 %%% API 

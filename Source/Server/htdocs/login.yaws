@@ -1,0 +1,17 @@
+<erl>
+get_response( ) ->
+	JSON = sn_server_login:make_json(),
+	io:format("~n (~p) JSON -> ~p~n", [self(), JSON]),
+	[
+	 {content, "application/json", JSON}, 
+	 {header, "Etag: "++ "2" }
+	].
+
+out(_Arg) ->
+
+	%Header_Etag = get_etag_header(Arg),
+	%Current_Etag = multi_cast_front:get_etag(),
+	%io:format("~n (~p) If-None-Match: ~p ~n", [self(), Header_Etag]), 
+	%io:format("~n (~p) ETag: ~p ~n", [self(), Current_Etag]), 
+	get_response( ).
+</erl>

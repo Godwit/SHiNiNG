@@ -1,0 +1,9 @@
+<erl>
+out(Arg) ->
+        {ok, UserName} = postvar(Arg, "username"),
+        {ok, Password} = postvar(Arg, "password"), 
+        io:format("~n(~p) UserName ~p, Password ~p ~n",
+	                [self(), UserName, Password]), 
+        %%multi_cast_front:update_status(Name, Status), 
+        {html, "true"}.
+</erl>
