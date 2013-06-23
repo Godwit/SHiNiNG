@@ -27,3 +27,7 @@ dialyzer: clean
 
 clean:
 	(cd src;$(MAKE) clean)
+
+
+run:
+	(cd ebin;erl  -eval "application:start(sn_server), init:stop()")

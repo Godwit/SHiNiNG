@@ -49,8 +49,6 @@ init([]) ->
 	MaxRestarts    		  = 1000,
 	MaxSecondsBetweenRestarts = 3600,
 
-	ServerName 		  = sn_server_game, 
-	ServerFrontName 	  = sn_server_login, 
 	SupFlags 		  = {RestartStrategy,
 			MaxRestarts, 
 			MaxSecondsBetweenRestarts},
@@ -59,19 +57,51 @@ init([]) ->
 	Shutdown 		  = 2000,
 	Type 			  = worker,
 
-	Server 			  = {'sn_server_game', 
-				     {ServerName, start_link, []},
-				     Restart, 
-				     Shutdown, 
-				     Type, 
-				     [ServerName]},
-	Front 			   = {'sn_server_login', 
-				      {ServerFrontName, start_link, []},
+	%%% ------------------------------------
+
+	%%% sn_server_login
+	NameServerLogin 	  = sn_server_login, 
+	ServerLogin		  = {'sn_server_login', 
+				      {NameServerLogin, start_link, []},
 				      Restart,
 				      Shutdown,
 				      Type, 
-				      [ServerFrontName]},
-	{ok, {SupFlags, [Server, Front]}}.
+				      [NameServerLogin]},
+
+
+	%%% sn_server_game
+	NameServerGame 		  = sn_server_game, 
+	ServerGame		  = {'sn_server_game', 
+				     {NameServerGame, start_link, []},
+				     Restart, 
+				     Shutdown, 
+				     Type, 
+				     [NameServerGame]},
+	
+
+	%%% sn_server_player
+	NameServerPlayer	  = sn_server_player, 
+	ServerPlayer		  = {'sn_server_player', 
+				     {NameServerPlayer, start_link, []},
+				     Restart, 
+				     Shutdown, 
+				     Type, 
+				     [NameServerPlayer]},
+	
+
+	%%% sn_db_inf
+	NameDBInf 		  = sn_db_inf, 
+	DBInf			  = {'sn_db_inf', 
+				     {NameDBInf, start_link, []},
+				     Restart, 
+				     Shutdown, 
+				     Type, 
+				     [NameDBInf]},
+	
+
+	
+	%%% ------------------------------------
+	{ok, {SupFlags, [ServerGame, ServerLogin,ServerPlayer,DBInf ]}}.
 
 %%%=================================================================== 
 %%% Internal functions 
