@@ -4,6 +4,6 @@ out(Arg) ->
         {ok, Password} = postvar(Arg, "password"), 
         io:format("~n(~p) UserName ~p, Password ~p ~n",
 	                [self(), UserName, Password]), 
-        %%multi_cast_front:update_status(Name, Status), 
+	sn_server_register:register_account( UserName, Password ),
         {html, "true"}.
 </erl>

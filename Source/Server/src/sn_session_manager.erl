@@ -7,19 +7,18 @@
 %%% Created : 12 Jun 2013 by Godwit
 
 %%%------------------------------------------------------------------- 
--module( sn_server_player ).
+-module( sn_session_manager).
 -behaviour( gen_server ).
 
--include( "record_def.hrl" ).
 %% API 
--export([start/1]).
+-export([start_link/0]).
 
 %% gen_server callbacks
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2,
 	terminate/2, code_change/3]). 
--export( [ stop/1 ] ).
+-export([ new_session/0 ] ).
+-define( SESSION_MANAGER, ?MODULE).
 
--define( PLAYER, ?MODULE).
 %%%=================================================================== 
 %%% API 
 %%%===================================================================
@@ -27,6 +26,8 @@
 %%%=================================================================== 
 %%% Functions for internal Use 
 %%%===================================================================
+new_session( ) ->
+	gen_server:call( ?MODULE, { new_session } ).
 
 %%-------------------------------------------------------------------- 
 %% @doc
@@ -34,12 +35,8 @@
 %% @spec start_link() -> {ok, Pid} | ignore | {error, Error}
 %% @end 
 %%-------------------------------------------------------------------- 
-start( [AccountID, UserName, Session] )
-	when is_integer( AccountID ),
-	     is_list( UserName ),
-	     is_integer( Session ) ->
-	gen_server:start( ?MODULE, [AccountID, UserName, Session], []).
-
+start_link() ->
+	gen_server:start_link({local, ?SESSION_MANAGER}, ?MODULE, [], []).
 
 %%%=================================================================== 
 %%% gen_server callbacks 
@@ -57,21 +54,14 @@ start( [AccountID, UserName, Session] )
 %% @end 
 %%--------------------------------------------------------------------
 
-init([AccountID, UserName, Session]) ->
-	process_flag( trap_exit, true ),
-	Player = #rd_player{ oid = AccountID, pid = self(), session=Session },
-	%%% 注意：这里只做最简单的登陆处理
-        %%% TODO
-	%%% 1. 往数据库里面纪录些东西
-	%%% 2. 其他	
-	log4erl:info("~n~p:~p(~p) : ~p ~p ~p ~n",
-		[?MODULE, ?LINE, self(), AccountID, UserName, Session ]), 
-	{ok, Player }.
-
-stop( PlayerPid ) 
-	when is_pid( PlayerPid ) ->
-	gen_server:cast( PlayerPid, stop ).
-
+init([]) ->
+	log4erl:info("~n~p:~p(~p) init(~p)~n",
+		[?MODULE, ?LINE, self(), []]), 
+	{ok, []};
+init(Status) ->
+	log4erl:info("~n~p:~p(~p) init(~p)~n",
+		[?MODULE, ?LINE, self(), Status]), 
+	{ok, Status}.
 
 %%-------------------------------------------------------------------- 
 %% @private
@@ -87,6 +77,10 @@ stop( PlayerPid )
 %% 					{stop, Reason, State}
 %% @end 
 %%--------------------------------------------------------------------
+handle_call({ new_session }, _From, State) -> 
+	Session = make_ref(),
+	log4erl:info( "~nGenerate a new session:~p~n", [Session] ),
+	{replay, Session, State };
 handle_call({ test }, _From, State) -> 
 	{reply, ok, State}.
 
@@ -128,9 +122,7 @@ handle_info(_Info, State) ->
 %% @spec terminate(Reason, State) -> void()
 %% @end 
 %%-------------------------------------------------------------------- 
-terminate( _Reason, _Data ) ->
-	log4erl:info( "~nPlayer is terminating..~p~n", _Reason ),
-	%%% TODO 做一些收尾工作,例如设置DB的值
+terminate(_Reason, _State) ->
 	ok.
 
 %%-------------------------------------------------------------------- 

@@ -14,7 +14,8 @@
 -record( tbl_account, {
 	account_id,		%%% --- Primary Key: Account ID
 	username,		%%% --- Username
-	password		%%% --- Password
+	password,		%%% --- Password
+	session			%%% --- session
 	} ).
 
 %%% 用户信息表

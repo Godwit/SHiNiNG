@@ -58,6 +58,16 @@ init([]) ->
 	Type 			  = worker,
 
 	%%% ------------------------------------
+	
+	%%% sn_server_login
+	NameServerRegister 	  = sn_server_register, 
+	ServerRegister		  = {'sn_server_register', 
+				      {NameServerRegister, start_link, []},
+				      Restart,
+				      Shutdown,
+				      Type, 
+				      [NameServerRegister]},
+	
 
 	%%% sn_server_login
 	NameServerLogin 	  = sn_server_login, 
@@ -67,6 +77,16 @@ init([]) ->
 				      Shutdown,
 				      Type, 
 				      [NameServerLogin]},
+	
+	%%% sn_session_manager
+	NameSessionManager 	  = sn_session_manager, 
+	SessionManager	  	  = {'sn_session_manager', 
+				      {NameSessionManager, start_link, []},
+				      Restart,
+				      Shutdown,
+				      Type, 
+				      [NameSessionManager]},
+
 
 
 	%%% sn_server_game
@@ -101,7 +121,9 @@ init([]) ->
 
 	
 	%%% ------------------------------------
-	{ok, {SupFlags, [ServerGame, ServerLogin,ServerPlayer,DBInf ]}}.
+	{ok, {SupFlags, [ServerGame, ServerLogin,
+			SessionManager, ServerRegister,
+			ServerPlayer,DBInf ]}}.
 
 %%%=================================================================== 
 %%% Internal functions 

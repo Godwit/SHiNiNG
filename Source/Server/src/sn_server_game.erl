@@ -16,8 +16,14 @@
 %% gen_server callbacks
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2,
 	terminate/2, code_change/3]). 
+-export( [join_player/3] ).
 -define(SERVER, ?MODULE).
 
+-record( data, { 
+	  account_id,			%%% Account ID
+	  pid,				%%% process id
+	  xref = gb_trees:empty()	%%% 	
+	}).
 %%%=================================================================== 
 %%% API 
 %%%===================================================================
@@ -25,6 +31,8 @@
 %%%=================================================================== 
 %%% Functions for internal Use 
 %%%===================================================================
+join_player( AccountID, PID, Session ) ->
+	gen_server:call( ?MODULE, { join_player, AccountID, PID, Session } ).
 
 %%-------------------------------------------------------------------- 
 %% @doc
@@ -52,9 +60,10 @@ start_link() ->
 %%--------------------------------------------------------------------
 
 init([]) ->
+	Data = #data{ xref= gb_trees:empty() },
 	log4erl:info("~n~p:~p(~p) init(~p)~n",
 		[?MODULE, ?LINE, self(), []]), 
-	{ok, []};
+	{ok, Data };
 init(Status) ->
 	log4erl:info("~n~p:~p(~p) init(~p)~n",
 		[?MODULE, ?LINE, self(), Status]), 
@@ -74,6 +83,11 @@ init(Status) ->
 %% 					{stop, Reason, State}
 %% @end 
 %%--------------------------------------------------------------------
+handle_call({ join_player, AccountID, PID, Session  }, _From, Data) -> 
+	XRef  = Data#data.xref,
+	XRef1 = gb_trees:insert( AccountID, { PID, Session }, XRef ),
+	Data1 = Data#data{ xref = XRef1 },
+	{ reply, ok, Data1 };
 handle_call({ test }, _From, State) -> 
 	{reply, ok, State}.
 

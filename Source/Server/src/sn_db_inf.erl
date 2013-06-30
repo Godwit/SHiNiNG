@@ -16,8 +16,11 @@
 %% gen_server callbacks
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2,
 	terminate/2, code_change/3]). 
--define( DB_INF, ?MODULE).
+-export( [ account_check/2 ] ).
 
+-include( "schema.hrl" ).
+
+-define( DB_INF, ?MODULE).
 %%%=================================================================== 
 %%% API 
 %%%===================================================================
@@ -25,6 +28,8 @@
 %%%=================================================================== 
 %%% Functions for internal Use 
 %%%===================================================================
+account_check( UserName, Password ) ->
+	gen_server:call( ?MODULE, { account_check, UserName, Password } ).
 
 %%-------------------------------------------------------------------- 
 %% @doc
@@ -75,7 +80,11 @@ init(Status) ->
 %% @end 
 %%--------------------------------------------------------------------
 handle_call({ test }, _From, State) -> 
-	{reply, ok, State}.
+	{reply, ok, State};
+handle_call({account_check, UserName, Password}, _From, State) ->
+	Account = #tbl_account{ account_id = none, username = UserName, password = Password, session = none },  
+	Result = intf_account_check( Account ),
+	{ reply , Result, State }.
 
 %%-------------------------------------------------------------------- 
 %% @private
@@ -132,4 +141,20 @@ code_change(_OldVsn, State, _Extra) ->
 %%%=================================================================== 
 %%% Internal functions 
 %%%===================================================================
+intf_account_check( Account ) ->
+	case db_op:query_account( Account#tbl_account.username ) of
+	  [] ->
+	      { error, not_exist };
+	  [ { AccountID, PassStored }] ->
+	      intf_account_check( Account, AccountID, PassStored )
+	end.
+
+intf_account_check( Account, AccountID, PassStored ) ->
+	case Account#tbl_account.password == PassStored of
+	  true ->
+		Account1 = Account#tbl_account{account_id = AccountID},
+		{ ok, Account1 };
+	  false ->
+		{ error, bad_password }
+	end.
 
