@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		669929EC1785BE60006FF98F /* DealDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 669929EB1785BE60006FF98F /* DealDetailViewController.m */; };
 		669929ED1785BE60006FF98F /* DealDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 669929EB1785BE60006FF98F /* DealDetailViewController.m */; };
+		669929F11785CC8E006FF98F /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 669929F01785CC8E006FF98F /* AboutViewController.m */; };
+		669929F21785CC8E006FF98F /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 669929F01785CC8E006FF98F /* AboutViewController.m */; };
 		66A66CE5178325EB002ADAE5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A66CE4178325EB002ADAE5 /* UIKit.framework */; };
 		66A66CE7178325EB002ADAE5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A66CE6178325EB002ADAE5 /* Foundation.framework */; };
 		66A66CE9178325EB002ADAE5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A66CE8178325EB002ADAE5 /* CoreGraphics.framework */; };
@@ -40,6 +42,8 @@
 /* Begin PBXFileReference section */
 		669929EA1785BE60006FF98F /* DealDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealDetailViewController.h; sourceTree = "<group>"; };
 		669929EB1785BE60006FF98F /* DealDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealDetailViewController.m; sourceTree = "<group>"; };
+		669929EF1785CC8E006FF98F /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		669929F01785CC8E006FF98F /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		66A66CE0178325EB002ADAE5 /* iWon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iWon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66A66CE4178325EB002ADAE5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		66A66CE6178325EB002ADAE5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -129,6 +133,8 @@
 				66A66CEB178325EB002ADAE5 /* Supporting Files */,
 				669929EA1785BE60006FF98F /* DealDetailViewController.h */,
 				669929EB1785BE60006FF98F /* DealDetailViewController.m */,
+				669929EF1785CC8E006FF98F /* AboutViewController.h */,
+				669929F01785CC8E006FF98F /* AboutViewController.m */,
 			);
 			path = iWon;
 			sourceTree = "<group>";
@@ -281,6 +287,7 @@
 				66A66CF5178325EB002ADAE5 /* iWonAppDelegate.m in Sources */,
 				66A66D01178325EC002ADAE5 /* iWonViewController.m in Sources */,
 				669929EC1785BE60006FF98F /* DealDetailViewController.m in Sources */,
+				669929F11785CC8E006FF98F /* AboutViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,6 +297,7 @@
 			files = (
 				66A66D16178325EC002ADAE5 /* iWonTests.m in Sources */,
 				669929ED1785BE60006FF98F /* DealDetailViewController.m in Sources */,
+				669929F21785CC8E006FF98F /* AboutViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
