@@ -9,4 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface iWonViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, strong)IBOutlet UITableView * tableView;
 @end

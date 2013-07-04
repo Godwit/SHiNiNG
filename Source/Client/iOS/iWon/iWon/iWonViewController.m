@@ -7,6 +7,7 @@
 //
 
 #import "iWonViewController.h"
+#import "DealDetailViewController.h"
 
 @interface iWonViewController ()
 
@@ -15,6 +16,7 @@
 @implementation iWonViewController{
     NSArray * dealList;
 }
+@synthesize tableView;
 
 - (void)viewDidLoad
 {
@@ -61,5 +63,16 @@ cellForRowAtIndexPath:(NSIndexPath *)indexPath
     cell.textLabel.text = [ dealList objectAtIndex:indexPath.row];
     return cell;
 }
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ( [segue.identifier isEqualToString:@"showDealDetail"])
+    {
+        NSIndexPath * indexPath = [self.tableView indexPathForSelectedRow];
+        DealDetailViewController * destViewController = segue.destinationViewController;
+        destViewController.dealName = [dealList objectAtIndex:indexPath.row];
+    }
+}
+
 
 @end

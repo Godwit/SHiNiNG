@@ -12,8 +12,22 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="vbh-2E-Qvx">
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="vbh-2E-Qvx">
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DealCell" id="1KY-Rq-qbh">
+                                        <rect key="frame" x="0.0" y="46" width="320" height="46"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="280" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <segue destination="ILc-M1-Kf9" kind="push" identifier="showDealDetail" id="4B8-Ky-zjc"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="2" id="0AK-58-hQi"/>
                                     <outlet property="delegate" destination="2" id="Gvm-rv-e08"/>
@@ -29,10 +43,45 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="iWon" id="Jto-3k-CE7"/>
+                    <connections>
+                        <outlet property="tableView" destination="vbh-2E-Qvx" id="ynp-ec-b77"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="799" y="112"/>
+        </scene>
+        <!--Deal Detail View Controller-->
+        <scene sceneID="Fzm-vl-Nqc">
+            <objects>
+                <viewController id="ILc-M1-Kf9" customClass="DealDetailViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TxD-IJ-CyZ">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5c0-T5-tle">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="136" id="vYI-1u-cJh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="5c0-T5-tle" firstAttribute="leading" secondItem="TxD-IJ-CyZ" secondAttribute="leading" constant="123" id="EJt-Sa-1JZ"/>
+                            <constraint firstItem="5c0-T5-tle" firstAttribute="top" secondItem="TxD-IJ-CyZ" secondAttribute="top" constant="188" id="WTC-sR-7hQ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="sfl-BK-Cqe"/>
+                    <connections>
+                        <outlet property="dealLabel" destination="5c0-T5-tle" id="5a5-P8-eea"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HAd-Xr-s0G" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1246" y="118"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="FXT-lL-jb9">
@@ -54,11 +103,20 @@
         </scene>
     </scenes>
     <classes>
+        <class className="DealDetailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DealDetailViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="dealLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
         </class>
         <class className="iWonViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/iWonViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
